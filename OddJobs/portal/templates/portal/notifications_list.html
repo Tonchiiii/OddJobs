@@ -1,0 +1,90 @@
+{% extends 'portal/base.html' %}
+{% load static %}
+{% block content %}
+  <!-- HOME -->
+  <section class="section-hero overlay inner-page bg-image" style="background-image: url({% static 'portal/images/hero_1.jpg' %});" id="home-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h1 class="text-white font-weight-bold">Notifications</h1>
+          <div class="custom-breadcrumbs">
+            <a href="{% url 'portal-home' %}">Home</a> <span class="mx-2 slash">/</span>
+            <span class="text-white"><strong>Notifications</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    {% if user.is_authenticated %}
+      {% if user.employer %}
+        {% if notifications %}
+          <ul class="job-listings mb-5">
+            {% for notification in notifications %}
+              {% if job_listings %}
+                {% for job_listing in job_listings %}
+                  {% if job_listing.title == notification.title %}
+                    <h3><a href="{% url 'portal-job_single2' pk=job_listing.pk %}">{{ notification.title }}</a></h3>
+                  {% endif %}
+                    {% endfor %}
+                <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
+                <div class="job-listing-logo">
+                  <img src="{% static 'portal//job_logo_1.jpg' %}" alt="Image" class="img-fluid">
+                </div>
+
+                <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+                  <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
+                    <h2>{{ notification.title }}</h2>
+                    <strong>{{ notification.employer }}</strong>
+                  </div>
+                  <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
+                    <span class="icon-room">{{ notification.location }}</span>
+                  </div>
+                  <div class="job-listing-meta">
+                    <span class="badge badge-danger">{{ notification.application_status }}</span>
+                  </div>
+                </div>
+                </li>
+                
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% else %}
+          <strong>No Notifications</strong>
+        {% endif %}
+
+      {% elif user.employee %}
+        {% if e_notifications %}
+          <ul class="job-listings mb-5 ">
+            {% for e_notification in e_notifications %}
+              {% if job_listings %}
+                {% for job_listing in job_listings %}
+                  {% if job_listing.title == e_notification.title %}
+                    <h3><a href="{% url 'portal-job_single2' pk=job_listing.pk %}">{{ e_notification.title }}</a></h3>
+                  {% endif %}
+                    {% endfor %}
+                <li class="job-listing d-block d-sm-flex pb-3 pb-sm-2 align-items-center">
+                  <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+                    <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
+                      <strong>{{ e_notification.employer }}</strong>
+                    </div>
+                    <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
+                      <span class="icon-room">{{ e_notification.location }}</span>
+                    </div>
+                    <div class="job-listing-meta">
+                      <span class="badge badge-info">{{ e_notification.application_status }}</span>
+                    </div>
+                  </div>
+                </li>
+                
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% else %}
+          <strong>No Notifications</strong>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock %}

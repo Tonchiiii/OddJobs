@@ -1,0 +1,66 @@
+{% extends "portal/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <!-- HOME -->
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url({% static 'portal/images/hero_1.jpg' %});" id="home-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h1 class="text-white font-weight-bold">Profile</h1>
+            <div class="custom-breadcrumbs">
+              <a href="{% url 'portal-home' %}">Home</a> <span class="mx-2 slash">/</span>
+              <span class="text-white"><strong>Profile</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="site-section block__18514" id="next-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 mr-auto">
+            <div class="border p-4 rounded">
+              <ul class="list-unstyled block__47528 mb-0">
+                <li><span class="active">Graphic Design</span></li>
+                <li><a href="#">Marketing Strategy</a></li>
+                <li><a href="#">Web Design</a></li>
+                <li><a href="#">Market Leading</a></li>
+                <li><a href="#">Search Engine Optimization</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <span class="text-primary d-block mb-5"><img class="rounded-circle account-img" src="{{ user.profile.image.url }}"></img></span>
+            <h2 class="mb-4">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
+            <form method="POST" action="#" enctype="multipart/form-data" class="p-4 border rounded">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                  <legend class="border-bottom mb-4">Profile Info</legend>
+                  {{ u_form|crispy }}
+                  {{ p_form|crispy }}
+                </fieldset>
+  
+                <div class="row form-group">
+                  <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    <button class="btn px-4 btn-primary text-white" type="submit">Update</button>
+                  </div>
+                </div>
+  
+                <div class="border-top pt-3">
+                  <small class="text-muted d-flex justify-content-center align-items-center">
+                    Already Have an Account? <a href="{% url 'login' %}" class="ml-2">Sign In</a>
+                  </small>
+                </div>
+  
+            </form>
+            <p><a href="{% url 'portal-confirmation2' pk=prof.pk%}" class="btn btn-primary btn-md mt-4">Hire this Employee</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+{% endblock content %}

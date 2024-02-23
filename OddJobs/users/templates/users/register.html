@@ -1,0 +1,52 @@
+{% extends "portal/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+
+    <!-- HOME -->
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url({% static 'portal/images/hero_1.jpg' %});" id="home-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h1 class="text-white font-weight-bold">Sign Up</h1>
+            <div class="custom-breadcrumbs">
+              <a href="#">Home</a> <span class="mx-2 slash">/</span>
+              <span class="text-white"><strong>Log In</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="site-section">
+      <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-lg-6 mb-5">
+            <h2 class="mb-4">Sign Up To PAKI</h2>
+            <form method="POST" action="#" class="p-4 border rounded">
+              {% csrf_token %}
+              <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Today</legend>
+                {{ form|crispy }}
+              </fieldset>
+
+              <div class="row form-group">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                  <button class="btn px-4 btn-primary text-white" type="submit">Sign Up</button>
+                </div>
+              </div>
+
+              <div class="border-top pt-3">
+                <small class="text-muted d-flex justify-content-center align-items-center">
+                  Already Have an Account? <a href="{% url 'login' %}" class="ml-2">Sign In</a>
+                </small>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+{% endblock content %}

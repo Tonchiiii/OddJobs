@@ -1,0 +1,36 @@
+{% extends "portal/base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <!-- HOME -->
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url({% static 'portal/images/hero_1.jpg' %});" id="home-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h1 class="text-white font-weight-bold">Success</h1>
+            <div class="custom-breadcrumbs">
+              <a href="{% url 'portal-home' %}">Home</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="site-section">
+      <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-lg-6 mb-5">
+            <h2 class="mb-4 d-flex justify-content-center align-items-center">Congratulations! Payment was successful.</h2>
+              <div class="border-top pt-3">
+                <small class="text-muted d-flex justify-content-center align-items-center">
+                    <a href="{% url 'portal-home' %}" class="ml-2">Back to Home</a>
+                </small>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+    
+{% endblock content %}

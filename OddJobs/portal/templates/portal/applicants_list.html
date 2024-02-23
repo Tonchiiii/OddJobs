@@ -1,0 +1,62 @@
+{% extends 'portal/base.html' %}
+{% load static %}
+{% block content %}
+  <!-- HOME -->
+  <section class="section-hero overlay inner-page bg-image" style="background-image: url({% static 'portal/images/hero_1.jpg' %});" id="home-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <h1 class="text-white font-weight-bold">Applicants</h1>
+          <div class="custom-breadcrumbs">
+            <a href="{% url 'portal-home' %}">Home</a> <span class="mx-2 slash">/</span>
+            <span class="text-white"><strong>Applicants</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    {% if user.is_authenticated %}
+      {% if user.employer %}
+        {% if applicants %}
+          <ul class="job-listings mb-5">
+            {% for applicant in applicants %}
+              {% if job_listings %}
+                {% for job_listing in job_listings %}
+                  {% if job_listing.title == applicant.title %}
+                    <h3><a href="{% url 'portal-job_single' pk=job_listing.pk %}">{{ applicant.title }}</a></h3>
+                  {% endif %}
+                    {% endfor %}
+                <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
+                <div class="job-listing-logo">
+                  <img src="{% static 'portal/job_logo_1.jpg' %}" alt="Image" class="img-fluid">
+                </div>
+
+                <div class="job-listing-about d-sm-flex custom-width w-100 justify-content-between mx-4">
+                  <div class="job-listing-position custom-width w-50 mb-3 mb-sm-0">
+                    {% for applicant_profile in applicant_profiles %}
+                      {% if applicant_profile.user == applicant.user %}
+                        <h2><a href="{% url 'employee_profile' pk=applicant_profile.pk %}">{{ applicant.applicant }}</a></h2>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  <div class="job-listing-location mb-3 mb-sm-0 custom-width w-25">
+                    <span class="icon-room">{{ applicant.location }}</span>
+                  </div>
+                  <div class="job-listing-meta">
+                    <span class="badge badge-danger">{{ applicant.application_status }}</span>
+                  </div>
+                </div>
+                </li>
+                
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% else %}
+          <strong>No Applicants</strong>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "portal/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+    <!-- HOME -->
+    <section class="section-hero overlay inner-page bg-image" style="background-image: url({% static 'portal/images/hero_1.jpg' %});" id="home-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <h1 class="text-white font-weight-bold">Search</h1>
+            <div class="custom-breadcrumbs">
+              <a href="#">Home</a> <span class="mx-2 slash">/</span>
+              <span class="text-white"><strong>Search Results</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<h1>Search Results</h1>
+  {% if searched and results %}
+    <ul>
+    {% for result in results %}
+      <li><a href="{{ result.get_absolute_url }}">{{ result.title }}</a></li>
+    {% endfor %}
+    </ul>
+
+    {% elif searched_emp and results_emps %}
+    <ul>
+      {% for results_emp in results_emps %}
+        <li><a href="{{ results_emp.get_absolute_url }}">{{ results_emp.username }}</a></li>
+      {% endfor %}
+      </ul>
+
+  {% else %}
+    <p>No results found.</p>
+  {% endif %}
+
+
+  {% endblock content %}
